@@ -28,6 +28,25 @@
             border-bottom: 4px solid var(--gold);
         }
 
+        .btn-quiz {
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.btn-quiz:hover {
+    background: var(--gold);
+    color: #080808;
+}
+
         .logo-area img { width: 180px; filter: drop-shadow(0 0 15px var(--gold)); margin-bottom: 20px; }
 
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; }
@@ -187,10 +206,17 @@
         <div class="timer-unit"><span id="secs">00</span> Segs</div>
     </div>
     <br>
+    <div class="cta-container" style="margin-top: 25px;">
     <a href="https://wa.me/5538999147404?text=Oi,%20quero%20garantir%20o%20desconto%20da%20linha%20árabe" 
-       class="btn-store btn-wa" style="display:inline-flex; margin-top: 20px;" target="_blank">
-       GARANTIR MEU DESCONTO
+       class="btn-store btn-wa" target="_blank">
+       <i class="fab fa-whatsapp"></i> GARANTIR MEU DESCONTO
     </a>
+
+    <a href="seuperfumeideal.html" class="btn-quiz">
+       ✨ Descubra seu Perfume Ideal
+    </a>
+</div>
+
 </section>
 
 <a href="https://wa.me/5538999147404?text=Oi,%20vim%20do%20Instagram%20e%20quero%20conhecer%20os%20perfumes"
@@ -218,3 +244,4 @@
 
 </body>
 </html>
+
