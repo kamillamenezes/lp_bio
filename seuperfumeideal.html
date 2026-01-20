@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descobridor de Perfumes</title>
+    <title>Descobridor de Perfumes da Kami</title>
     <style>
         * {
             margin: 0;
@@ -284,7 +284,7 @@
 <body>
     <div class="container">
         <div class="logo">
-            <h1>✨ Produtos da Kami</h1>
+            <h1>✨ PRODUTOS DA KAMI</h1>
             <p>Encontre seu perfume perfeito em poucos passos</p>
         </div>
 
@@ -308,7 +308,7 @@
             <div class="perfume-profile" id="perfumeProfile"></div>
             <div class="perfume-suggestions" id="perfumeSuggestions"></div>
             <div class="instruction">📸 Tire um print e me envie no WhatsApp!</div>
-            <a href="https://wa.me/5538999147404" class="btn-whatsapp" target="_blank">💬 Enviar para WhatsApp</a>
+            <a href="https://wa.me/5538998749856" class="btn-whatsapp" target="_blank">💬 Enviar para WhatsApp</a>
         </div>
     </div>
 
@@ -330,18 +330,12 @@
                 type: "yesno"
             },
             {
-                text: "Você prefere perfumes mais intensos do que suaves?",
-                options: ["Sim", "Não"],
-                type: "yesno"
-            },
-            {
                 text: "Você prefere perfumes:",
                 options: [
                     "Doces e quentes",
                     "Amadeirados e intensos",
                     "Florais e femininos",
-                    "Frescos e sofisticados",
-                    "Icônicos e sensuais"
+                    "Frescos e sofisticados"
                 ],
                 type: "multiple"
             },
@@ -362,7 +356,7 @@
                 type: "yesno"
             },
             {
-                text: "Gosta de perfumes com especiarias (canela, pimenta, cardamomo)?",
+                text: "Gosta de perfumes com especiarias?",
                 options: ["Sim", "Não"],
                 type: "yesno"
             },
@@ -387,38 +381,109 @@
                 type: "yesno"
             },
             {
-                text: "Gosta da ideia de perfumes com alta fixação e projeção?",
-                options: ["Sim", "Não"],
-                type: "yesno"
+                text: "Para qual ocasião você mais usaria?",
+                options: [
+                    "Dia a dia / Trabalho",
+                    "Encontros românticos",
+                    "Festas e eventos",
+                    "Ocasiões especiais"
+                ],
+                type: "multiple"
+            },
+            {
+                text: "Qual sensação você quer passar?",
+                options: [
+                    "Sofisticação e elegância",
+                    "Sensualidade e poder",
+                    "Doçura e feminilidade",
+                    "Frescor e leveza"
+                ],
+                type: "multiple"
             }
         ];
 
-        const perfumes = {
-            oriental: {
+        const allPerfumes = [
+            {
                 name: "Khamrah Qahwa",
                 image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.88175.avif",
-                profile: "🌙 Perfil: Oriental Doce & Envolvente - Perfume quente, adocicado e com presença marcante. Perfeito para quem busca sedução e impacto!",
-                suggestions: ["Khamrah Qahwa", "Yara Candy", "Asad Elixir", "Asad Bourbon", "Afeef", "Afkaar"]
+                tags: ["doce", "oriental", "intenso", "especiaria", "romantico", "festas"]
             },
-            amadeirado: {
+            {
+                name: "Yara Candy",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.95752.avif",
+                tags: ["doce", "floral", "feminino", "leve", "romantico"]
+            },
+            {
+                name: "Asad Elixir",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.117616.avif",
+                tags: ["doce", "oriental", "intenso", "sensual", "especial"]
+            },
+            {
+                name: "Asad Bourbon",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.101124.avif",
+                tags: ["doce", "amadeirado", "intenso", "oriental", "sensual", "festas"]
+            },
+            {
+                name: "Afeef",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.100126.avif",
+                tags: ["floral", "feminino", "elegante", "romantico", "especial"]
+            },
+            {
+                name: "Afkaar",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.107723.avif",
+                tags: ["doce", "oriental", "intenso", "sensual", "festas"]
+            },
+            {
                 name: "Bade'e Al Oud Oud For Glory",
                 image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.64948.avif",
-                profile: "🔥 Perfil: Amadeirado Intenso & Misterioso - Perfume árabe clássico com oud, poder e presença. Para quem ama luxo e imponência!",
-                suggestions: ["Bade'e Al Oud Oud For Glory", "Adeeb", "Al Fursan", "Al Dur Al Mknoon Gold", "Abaan"]
+                tags: ["amadeirado", "oud", "intenso", "misterioso", "especial", "luxo"]
             },
-            floral: {
+            {
+                name: "Adeeb",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.74053.avif",
+                tags: ["amadeirado", "oud", "intenso", "elegante", "especial"]
+            },
+            {
+                name: "Al Fursan",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.25825.avif",
+                tags: ["amadeirado", "intenso", "misterioso", "sensual", "festas"]
+            },
+            {
+                name: "Al Dur Al Mknoon Gold",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.25891.avif",
+                tags: ["amadeirado", "oriental", "luxo", "especial", "intenso"]
+            },
+            {
+                name: "Abaan",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.92181.avif",
+                tags: ["amadeirado", "especiaria", "intenso", "misterioso", "festas"]
+            },
+            {
                 name: "Asad Yara",
                 image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.76880.avif",
-                profile: "🌸 Perfil: Floral Feminino & Elegante - Perfume sofisticado, romântico e refinado. Ideal para mulheres que querem feminilidade com presença!",
-                suggestions: ["Asad Yara", "Afeef"]
+                tags: ["floral", "feminino", "elegante", "doce", "romantico"]
             },
-            fresco: {
+            {
                 name: "Fakhar Platin",
                 image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.107363.avif",
-                profile: "🌊 Perfil: Fresco, Moderno & Versátil - Perfume limpo e sofisticado com presença. Perfeito para o dia a dia com elegância!",
-                suggestions: ["Fakhar Platin", "Fakhar Black", "Fakhar Extrait"]
+                tags: ["fresco", "elegante", "diario", "trabalho", "sofisticado"]
+            },
+            {
+                name: "Fakhar Black",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.70465.avif",
+                tags: ["fresco", "intenso", "elegante", "festas", "sofisticado"]
+            },
+            {
+                name: "Fakhar Extrait",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.85092.avif",
+                tags: ["fresco", "intenso", "luxo", "especial", "elegante"]
+            },
+            {
+                name: "Fakhar Rose",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.70466.avif",
+                tags: ["floral", "feminino", "elegante", "romantico", "especial"]
             }
-        };
+        ];
 
         let currentQuestion = 0;
         let answers = [];
@@ -455,78 +520,103 @@
         }
 
         function calculateResult() {
-            let scores = {
-                oriental: 0,
-                amadeirado: 0,
-                floral: 0,
-                fresco: 0
-            };
+            const userProfile = [];
 
-            // Perguntas sobre intensidade e marcante (0-3)
-            for (let i = 0; i < 4; i++) {
-                if (answers[i] === 0) { // Sim
-                    scores.oriental += 2;
-                    scores.amadeirado += 2;
-                } else {
-                    scores.fresco += 2;
-                    scores.floral += 1;
-                }
+            // Intensidade e marcante (0-2)
+            const marcante = (answers[0] === 0 ? 1 : 0) + (answers[1] === 0 ? 1 : 0) + (answers[2] === 0 ? 1 : 0);
+            if (marcante >= 2) {
+                userProfile.push("intenso");
             }
 
-            // Pergunta chave (4): Você prefere perfumes
+            // Pergunta principal (3)
+            switch(answers[3]) {
+                case 0: userProfile.push("doce"); break;
+                case 1: userProfile.push("amadeirado"); break;
+                case 2: userProfile.push("floral"); break;
+                case 3: userProfile.push("fresco"); break;
+            }
+
+            // Ideal (4)
             switch(answers[4]) {
-                case 0: // Doces e quentes
-                    scores.oriental += 5;
-                    break;
-                case 1: // Amadeirados e intensos
-                    scores.amadeirado += 5;
-                    break;
-                case 2: // Florais e femininos
-                    scores.floral += 5;
-                    break;
-                case 3: // Frescos e sofisticados
-                    scores.fresco += 5;
-                    break;
-                case 4: // Icônicos e sensuais
-                    scores.oriental += 3;
-                    scores.amadeirado += 2;
-                    break;
+                case 0: userProfile.push("elegante", "sofisticado"); break;
+                case 1: userProfile.push("sensual"); break;
+                case 2: userProfile.push("leve"); break;
+                case 3: userProfile.push("doce", "feminino"); break;
+                case 4: userProfile.push("misterioso"); break;
             }
 
-            // Pergunta sobre ideal (5)
-            switch(answers[5]) {
-                case 0: scores.floral += 2; scores.fresco += 1; break;
-                case 1: scores.oriental += 3; break;
-                case 2: scores.fresco += 3; break;
-                case 3: scores.oriental += 2; scores.floral += 1; break;
-                case 4: scores.amadeirado += 3; break;
+            // Doces (5)
+            if (answers[5] === 0) userProfile.push("doce");
+
+            // Especiarias (6)
+            if (answers[6] === 0) userProfile.push("especiaria");
+
+            // Florais (7)
+            if (answers[7] === 0) userProfile.push("floral", "feminino");
+
+            // Amadeirados (8)
+            if (answers[8] === 0) userProfile.push("amadeirado");
+
+            // Orientais (9)
+            if (answers[9] === 0) userProfile.push("oriental");
+
+            // Oud (10)
+            if (answers[10] === 0) userProfile.push("oud", "amadeirado");
+
+            // Ocasião (11)
+            switch(answers[11]) {
+                case 0: userProfile.push("diario", "trabalho"); break;
+                case 1: userProfile.push("romantico"); break;
+                case 2: userProfile.push("festas"); break;
+                case 3: userProfile.push("especial"); break;
             }
 
-            // Gostos olfativos (6-10)
-            if (answers[6] === 0) scores.oriental += 3; // doces
-            if (answers[7] === 0) scores.amadeirado += 2; // especiarias
-            if (answers[8] === 0) scores.floral += 3; // florais
-            if (answers[9] === 0) scores.amadeirado += 3; // amadeirados
-            if (answers[10] === 0) scores.oriental += 2; // orientais
-
-            // Oud e fixação (11-12)
-            if (answers[11] === 0) scores.amadeirado += 3; // oud
-            if (answers[12] === 0) {
-                scores.oriental += 2;
-                scores.amadeirado += 2;
+            // Sensação (12)
+            switch(answers[12]) {
+                case 0: userProfile.push("elegante", "sofisticado"); break;
+                case 1: userProfile.push("sensual"); break;
+                case 2: userProfile.push("doce", "feminino"); break;
+                case 3: userProfile.push("fresco", "leve"); break;
             }
 
-            // Encontrar maior pontuação
-            let maxScore = 0;
-            let result = 'oriental';
-            for (let profile in scores) {
-                if (scores[profile] > maxScore) {
-                    maxScore = scores[profile];
-                    result = profile;
-                }
+            // Calcular matches
+            const perfumeScores = allPerfumes.map(perfume => {
+                const matches = perfume.tags.filter(tag => userProfile.includes(tag)).length;
+                return { perfume, score: matches };
+            });
+
+            // Ordenar por score
+            perfumeScores.sort((a, b) => b.score - a.score);
+
+            // Pegar top perfume
+            const topPerfume = perfumeScores[0].perfume;
+            
+            // Pegar outras sugestões similares (excluir o top)
+            const suggestions = perfumeScores
+                .slice(1, 5)
+                .map(item => item.perfume.name);
+
+            // Determinar perfil
+            let profileType = "🌙 Oriental Doce & Envolvente";
+            let profileDesc = "Perfume quente, adocicado e com presença marcante.";
+
+            if (userProfile.includes("oud") || userProfile.includes("amadeirado") && userProfile.includes("intenso")) {
+                profileType = "🔥 Amadeirado Intenso & Misterioso";
+                profileDesc = "Perfume árabe clássico com oud, poder e presença.";
+            } else if (userProfile.includes("floral") && userProfile.includes("feminino")) {
+                profileType = "🌸 Floral Feminino & Elegante";
+                profileDesc = "Perfume sofisticado, romântico e refinado.";
+            } else if (userProfile.includes("fresco") || userProfile.includes("diario")) {
+                profileType = "🌊 Fresco, Moderno & Versátil";
+                profileDesc = "Perfume limpo e sofisticado com presença.";
             }
 
-            return perfumes[result];
+            return {
+                name: topPerfume.name,
+                image: topPerfume.image,
+                profile: `${profileType} - ${profileDesc}`,
+                suggestions: suggestions
+            };
         }
 
         function showResult() {
