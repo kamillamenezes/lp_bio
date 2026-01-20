@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descobridor de Perfumes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+            max-width: 650px;
+            width: 100%;
+            padding: 50px 45px;
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(40px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo h1 {
+            background: linear-gradient(135deg, #1e3c2f, #3d7a5c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .logo p {
+            color: #5a6c65;
+            font-size: 1.05em;
+            font-weight: 400;
+        }
+
+        .progress-bar {
+            background: #e8ede9;
+            height: 6px;
+            border-radius: 10px;
+            margin-bottom: 35px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #2d5a3f, #4a8266);
+            height: 100%;
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            color: #3d7a5c;
+            font-weight: 600;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .question {
+            font-size: 1.35em;
+            color: #1e3c2f;
+            margin-bottom: 25px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .option {
+            background: #f7faf8;
+            border: 2px solid #e0e8e3;
+            border-radius: 14px;
+            padding: 18px 22px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.02em;
+            text-align: left;
+            color: #2d4a3a;
+        }
+
+        .option:hover {
+            background: #e8f4ee;
+            border-color: #4a8266;
+            transform: translateX(8px);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #2d5a3f, #3d7a5c);
+            color: white;
+            border-color: #2d5a3f;
+            transform: translateX(8px);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #2d5a3f, #4a8266);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 17px 40px;
+            font-size: 1.08em;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 25px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(45, 90, 63, 0.3);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .result-container {
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .result-title {
+            font-size: 1.6em;
+            color: #2d5a3f;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .perfume-image {
+            width: 280px;
+            height: 280px;
+            background: #f7faf8;
+            border-radius: 20px;
+            margin: 25px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid #e0e8e3;
+        }
+
+        .perfume-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .perfume-name {
+            font-size: 1.9em;
+            color: #1e3c2f;
+            font-weight: 700;
+            margin: 25px 0 15px;
+        }
+
+        .perfume-profile {
+            background: linear-gradient(135deg, #e8f4ee, #f7faf8);
+            padding: 20px;
+            border-radius: 14px;
+            margin: 20px 0;
+            color: #2d4a3a;
+            line-height: 1.6;
+            border-left: 4px solid #4a8266;
+        }
+
+        .perfume-suggestions {
+            background: #f7faf8;
+            padding: 20px;
+            border-radius: 14px;
+            margin: 20px 0;
+            color: #2d4a3a;
+            text-align: left;
+        }
+
+        .perfume-suggestions h3 {
+            color: #2d5a3f;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .perfume-suggestions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .perfume-suggestions li {
+            padding: 5px 0;
+            color: #3d7a5c;
+        }
+
+        .perfume-suggestions li:before {
+            content: "✦ ";
+            color: #4a8266;
+            font-weight: bold;
+        }
+
+        .instruction {
+            background: linear-gradient(135deg, #fff8e1, #fffbf0);
+            padding: 18px;
+            border-radius: 14px;
+            margin: 25px 0;
+            color: #8b6914;
+            font-weight: 500;
+            border-left: 4px solid #d4af37;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 17px 40px;
+            font-size: 1.08em;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+            background: #20BA5A;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>✨ Produtos da Kami</h1>
+            <p>Encontre seu perfume perfeito em poucos passos</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <div id="quizContainer">
+            <div class="question-container">
+                <div class="question-number" id="questionNumber"></div>
+                <div class="question" id="questionText"></div>
+                <div class="options" id="optionsContainer"></div>
+            </div>
+            <button class="btn-next" id="nextBtn" disabled>Próxima</button>
+        </div>
+
+        <div class="result-container" id="resultContainer">
+            <div class="result-title">🎉 Seu perfume ideal é:</div>
+            <div class="perfume-image" id="perfumeImage"></div>
+            <div class="perfume-name" id="perfumeName"></div>
+            <div class="perfume-profile" id="perfumeProfile"></div>
+            <div class="perfume-suggestions" id="perfumeSuggestions"></div>
+            <div class="instruction">📸 Tire um print e me envie no WhatsApp!</div>
+            <a href="https://wa.me/5538999147404" class="btn-whatsapp" target="_blank">💬 Enviar para WhatsApp</a>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                text: "Você gosta de perfumes marcantes?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            },
+            {
+                text: "Prefere que o perfume seja percebido de longe?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            },
+            {
+                text: "Gosta de perfumes que deixam rastro?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            },
+            {
+                text: "Você prefere perfumes mais intensos do que suaves?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            },
+            {
+                text: "Você prefere perfumes:",
+                options: [
+                    "Doces e quentes",
+                    "Amadeirados e intensos",
+                    "Florais e femininos",
+                    "Frescos e sofisticados",
+                    "Icônicos e sensuais"
+                ],
+                type: "multiple"
+            },
+            {
+                text: "Quando você pensa em um perfume ideal, ele deve ser:",
+                options: [
+                    "Elegante e sofisticado",
+                    "Sedutor e envolvente",
+                    "Leve e refrescante",
+                    "Doce e feminino",
+                    "Misterioso e exótico"
+                ],
+                type: "multiple"
+            },
+            {
+                text: "Você gosta de perfumes doces?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            },
+            {
+                text: "Gosta de perfumes com especiarias (canela, pimenta, cardamomo)?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            },
+            {
+                text: "Gosta de perfumes florais?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            },
+            {
+                text: "Gosta de perfumes amadeirados?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            },
+            {
+                text: "Você se sente atraída por perfumes orientais?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            },
+            {
+                text: "Tem curiosidade em experimentar perfumes com oud?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            },
+            {
+                text: "Gosta da ideia de perfumes com alta fixação e projeção?",
+                options: ["Sim", "Não"],
+                type: "yesno"
+            }
+        ];
+
+        const perfumes = {
+            oriental: {
+                name: "Khamrah Qahwa",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.88175.avif",
+                profile: "🌙 Perfil: Oriental Doce & Envolvente - Perfume quente, adocicado e com presença marcante. Perfeito para quem busca sedução e impacto!",
+                suggestions: ["Khamrah Qahwa", "Yara Candy", "Asad Elixir", "Asad Bourbon", "Afeef", "Afkaar"]
+            },
+            amadeirado: {
+                name: "Bade'e Al Oud Oud For Glory",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.64948.avif",
+                profile: "🔥 Perfil: Amadeirado Intenso & Misterioso - Perfume árabe clássico com oud, poder e presença. Para quem ama luxo e imponência!",
+                suggestions: ["Bade'e Al Oud Oud For Glory", "Adeeb", "Al Fursan", "Al Dur Al Mknoon Gold", "Abaan"]
+            },
+            floral: {
+                name: "Asad Yara",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.76880.avif",
+                profile: "🌸 Perfil: Floral Feminino & Elegante - Perfume sofisticado, romântico e refinado. Ideal para mulheres que querem feminilidade com presença!",
+                suggestions: ["Asad Yara", "Afeef"]
+            },
+            fresco: {
+                name: "Fakhar Platin",
+                image: "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.107363.avif",
+                profile: "🌊 Perfil: Fresco, Moderno & Versátil - Perfume limpo e sofisticado com presença. Perfeito para o dia a dia com elegância!",
+                suggestions: ["Fakhar Platin", "Fakhar Black", "Fakhar Extrait"]
+            }
+        };
+
+        let currentQuestion = 0;
+        let answers = [];
+        let selectedOption = null;
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('questionNumber').textContent = `Pergunta ${currentQuestion + 1} de ${questions.length}`;
+            document.getElementById('questionText').textContent = question.text;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option;
+                optionDiv.onclick = () => selectOption(index, optionDiv);
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            selectedOption = null;
+            document.getElementById('nextBtn').disabled = true;
+        }
+
+        function selectOption(index, element) {
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedOption = index;
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function calculateResult() {
+            let scores = {
+                oriental: 0,
+                amadeirado: 0,
+                floral: 0,
+                fresco: 0
+            };
+
+            // Perguntas sobre intensidade e marcante (0-3)
+            for (let i = 0; i < 4; i++) {
+                if (answers[i] === 0) { // Sim
+                    scores.oriental += 2;
+                    scores.amadeirado += 2;
+                } else {
+                    scores.fresco += 2;
+                    scores.floral += 1;
+                }
+            }
+
+            // Pergunta chave (4): Você prefere perfumes
+            switch(answers[4]) {
+                case 0: // Doces e quentes
+                    scores.oriental += 5;
+                    break;
+                case 1: // Amadeirados e intensos
+                    scores.amadeirado += 5;
+                    break;
+                case 2: // Florais e femininos
+                    scores.floral += 5;
+                    break;
+                case 3: // Frescos e sofisticados
+                    scores.fresco += 5;
+                    break;
+                case 4: // Icônicos e sensuais
+                    scores.oriental += 3;
+                    scores.amadeirado += 2;
+                    break;
+            }
+
+            // Pergunta sobre ideal (5)
+            switch(answers[5]) {
+                case 0: scores.floral += 2; scores.fresco += 1; break;
+                case 1: scores.oriental += 3; break;
+                case 2: scores.fresco += 3; break;
+                case 3: scores.oriental += 2; scores.floral += 1; break;
+                case 4: scores.amadeirado += 3; break;
+            }
+
+            // Gostos olfativos (6-10)
+            if (answers[6] === 0) scores.oriental += 3; // doces
+            if (answers[7] === 0) scores.amadeirado += 2; // especiarias
+            if (answers[8] === 0) scores.floral += 3; // florais
+            if (answers[9] === 0) scores.amadeirado += 3; // amadeirados
+            if (answers[10] === 0) scores.oriental += 2; // orientais
+
+            // Oud e fixação (11-12)
+            if (answers[11] === 0) scores.amadeirado += 3; // oud
+            if (answers[12] === 0) {
+                scores.oriental += 2;
+                scores.amadeirado += 2;
+            }
+
+            // Encontrar maior pontuação
+            let maxScore = 0;
+            let result = 'oriental';
+            for (let profile in scores) {
+                if (scores[profile] > maxScore) {
+                    maxScore = scores[profile];
+                    result = profile;
+                }
+            }
+
+            return perfumes[result];
+        }
+
+        function showResult() {
+            const result = calculateResult();
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('resultContainer').classList.add('show');
+            
+            document.getElementById('perfumeImage').innerHTML = `<img src="${result.image}" alt="${result.name}">`;
+            document.getElementById('perfumeName').textContent = result.name;
+            document.getElementById('perfumeProfile').textContent = result.profile;
+            
+            const suggestionsList = result.suggestions.map(p => `<li>${p}</li>`).join('');
+            document.getElementById('perfumeSuggestions').innerHTML = `
+                <h3>✨ Outras sugestões para você:</h3>
+                <ul>${suggestionsList}</ul>
+            `;
+        }
+
+        document.getElementById('nextBtn').onclick = function() {
+            answers.push(selectedOption);
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        };
+
+        showQuestion();
+    </script>
+</body>
+</html>
